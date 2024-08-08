@@ -1,48 +1,36 @@
 // 4-pricing.js
-import Currency from './3-currency.js';
+/* eslint-disable no-underscore-dangle */
+import Currency from './3-currency';
 
-export default class Pricing {
-  constructor(amount, currency) {
-    this.amount = amount;
-    this.currency = currency;
+class Pricing {
+  constructor(amount = 0, currency = Currency) {
+    this._amount = amount;
+    this._currency = currency;
   }
 
-  // Getter for amount
+  set amount(amount = 0) {
+    this._amount = amount;
+  }
+
   get amount() {
     return this._amount;
   }
 
-  // Setter for amount with type validation
-  set amount(value) {
-    if (typeof value !== 'number') {
-      throw new TypeError('Amount must be a number');
-    }
-    this._amount = value;
+  set currency(currency = '') {
+    this._currency = currency;
   }
 
-  // Getter for currency
   get currency() {
     return this._currency;
   }
 
-  // Setter for currency with type validation
-  set currency(value) {
-    if (!(value instanceof Currency)) {
-      throw new TypeError('Currency must be an instance of the Currency class');
-    }
-    this._currency = value;
-  }
-
-  // Method to display the full price in the format: amount currency_name (currency_code)
   displayFullPrice() {
-    return `${this._amount} ${this._currency.name} (${this._currency.code})`;
+    return `${this._amount} ${this.currency.displayFullCurrency()}`;
   }
 
-  // Static method to convert price
   static convertPrice(amount, conversionRate) {
-    if (typeof amount !== 'number' || typeof conversionRate !== 'number') {
-      throw new TypeError('Both amount and conversionRate must be numbers');
-    }
     return amount * conversionRate;
   }
 }
+
+export default Pricing;
