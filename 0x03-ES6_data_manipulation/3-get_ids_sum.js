@@ -1,8 +1,12 @@
-export default function getStudentIdsSum(getListStudents) {
-  const myArr = [
-    { id: 1, firstName: 'Guillaume', location: 'San Francisco' },
-    { id: 2, firstName: 'James', location: 'Columbia' },
-    { id: 5, firstName: 'Serena', location: 'San Francisco' },
-  ];
-  return myArr.reduce(((reducer, myArr) => reducer + myArr.id), 0);
+// 3-get_ids_sum.js
+
+export default function getStudentIdsSum(students) {
+  // Check if the input is an array
+  if (!Array.isArray(students)) {
+    return 0;
+  }
+
+  // Use reduce to sum up all the student ids
+  return students.reduce((sum, student) => sum + student.id, 0);
 }
+
