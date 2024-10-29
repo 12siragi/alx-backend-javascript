@@ -1,4 +1,3 @@
-// 9-hoisting.js
 class HolbertonClass {
   constructor(year, location) {
     this._year = year;
