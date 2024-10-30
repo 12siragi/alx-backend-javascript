@@ -35,23 +35,24 @@ const countStudents = (dataPath) => new Promise((resolve, reject) => {
           }
 
           // Map property names to values for the student
-          const studentEntries = studentPropertyNames.map((propName, idx) => [propName, studentPropertyValues[idx]]);
+          const studentEntries = studentPropertyNames.map(
+            (propName, idx) => [propName, studentPropertyValues[idx]]
+          );
           studentGroups[field].push(Object.fromEntries(studentEntries));
         }
 
         // Calculate total number of students
         const totalStudents = Object.values(studentGroups).reduce(
-          (prev, curr) => (prev || []).length + curr.length
+          (prev, curr) => (prev || []).length + curr.length,
         );
         reportParts.push(`Number of students: ${totalStudents}`);
 
         // Log number of students and their names in each field
         for (const [field, group] of Object.entries(studentGroups)) {
-          reportParts.push([
-            `Number of students in ${field}: ${group.length}.`,
-            'List:',
-            group.map((student) => student.firstname).join(', ')
-          ].join(' '));
+          reportParts.push(
+            `Number of students in ${field}: ${group.length}.` +
+            ` List: ${group.map((student) => student.firstname).join(', ')}`,
+          );
         }
         resolve(reportParts.join('\n'));
       }
@@ -62,18 +63,18 @@ const countStudents = (dataPath) => new Promise((resolve, reject) => {
 const SERVER_ROUTE_HANDLERS = [
   {
     route: '/',
-    handler (_, res) {
+    handler(_, res) {
       const responseText = 'Hello Holberton School!';
 
       res.setHeader('Content-Type', 'text/plain');
       res.setHeader('Content-Length', responseText.length);
       res.statusCode = 200;
       res.write(Buffer.from(responseText));
-    }
+    },
   },
   {
     route: '/students',
-    handler (_, res) {
+    handler(_, res) {
       const responseParts = ['This is the list of our students'];
 
       countStudents(DB_FILE)
@@ -93,8 +94,8 @@ const SERVER_ROUTE_HANDLERS = [
           res.statusCode = 200;
           res.write(Buffer.from(responseText));
         });
-    }
-  }
+    },
+  },
 ];
 
 app.on('request', (req, res) => {
@@ -111,3 +112,4 @@ app.listen(PORT, HOST, () => {
 });
 
 module.exports = app;
+
